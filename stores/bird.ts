@@ -59,11 +59,32 @@ type Recording = {
   smp: string
 }
 
+type RenameKeys<T, M extends Record<keyof T, string>> = {
+  [K in keyof T as M[K]]: T[K]
+}
+
+type Bird = RenameKeys<
+  Pick<Recording, 'id' | 'gen' | 'sp' | 'en' | 'rec' | 'cnt' | 'loc' | 'type' | 'length' | 'time' | 'date'>,
+  {
+    id: 'id'
+    gen: 'genericName'
+    sp: 'specificName'
+    en: 'englishName'
+    rec: 'recordBy'
+    cnt: 'country'
+    loc: 'location'
+    type: 'type'
+    length: 'duration'
+    time: 'capturedAt'
+    date: 'date'
+  }
+>
+
 export const useBirdStore = defineStore('bird', () => {
 
   const isFetching = ref(false)
   const error = ref<string | null | unknown>(null)
-  const list = ref<Recording[] | null>(null)
+  const list = ref<Bird[]>([])
 
   fetchBirds()
 
@@ -76,12 +97,30 @@ export const useBirdStore = defineStore('bird', () => {
       const response = await fetch('https://xeno-canto.org/api/2/recordings?query=gen:Grus+stage:juvenile+cnt:France')
       if (!response.ok) error.value = `HTTP error, status: ${response.status}`
       const data: Response<Recording> = await response.json()
-      list.value = data.recordings
+      list.value = remapBirds(data.recordings)
     } catch (e) {
       error.value = error
     } finally {
       isFetching.value = false
     }
+  }
+
+  function remapBirds(data:Recording[]) {
+    return data.map(recording => {
+      return {
+        id: recording.id,
+        genericName: recording.gen,
+        specificName: recording.sp,
+        englishName: recording.en,
+        recordBy: recording.rec,
+        country: recording.cnt,
+        location: recording.loc,
+        type: recording.type,
+        duration: recording.length,
+        capturedAt: recording.time,
+        date: recording.date
+      }
+    })
   }
 
   return {
