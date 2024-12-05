@@ -9,8 +9,7 @@
 
   fetchBirds()
 
-  // to do : questions
-  // to do : mail (+ github access)
+  // in progress : mail + questions (+ github access)
 </script>
 
 <template>
