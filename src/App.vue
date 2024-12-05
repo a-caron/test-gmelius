@@ -1,9 +1,9 @@
 <script setup lang="ts">
 
-  import { storeToRefs } from 'pinia'
-  import { useBirdStore } from '../stores/bird.ts'
-  import Sound from './components/sound.vue'
   import { onMounted } from 'vue'
+  import { useBirdStore } from '../stores/bird.ts'
+  import { storeToRefs } from 'pinia'
+  import sound from './components/sound.vue'
 
   const { fetchBirds } = useBirdStore()
   const { toggleBirdShortSounds, birdIsFetching, birdList } = storeToRefs(useBirdStore())

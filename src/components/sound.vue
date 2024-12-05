@@ -6,11 +6,20 @@
     url: string | null
   }>()
 
-  const { play } = useSound(props.url)
+  const { play, stop, isPlaying } = useSound(props.url)
 </script>
 
 <template>
   <v-btn
+    v-if="isPlaying"
+    icon="mdi-stop"
+    @click="stop"
+    size="x-small"
+    variant="tonal"
+    color="error"
+  />
+  <v-btn
+    v-else
     icon="mdi-play"
     @click="play"
     size="x-small"
