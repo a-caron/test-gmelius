@@ -11,7 +11,6 @@
 
 <template>
   <v-btn
-    v-if="url"
     icon="mdi-play"
     @click="play"
     size="x-small"

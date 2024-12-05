@@ -3,11 +3,12 @@
   import { storeToRefs } from 'pinia'
   import { useBirdStore } from '../stores/bird.ts'
   import Sound from './components/sound.vue'
+  import { onMounted } from 'vue'
 
   const { fetchBirds } = useBirdStore()
   const { toggleBirdShortSounds, birdIsFetching, birdList } = storeToRefs(useBirdStore())
 
-  fetchBirds()
+  onMounted(() => fetchBirds())
 </script>
 
 <template>
@@ -25,7 +26,10 @@
         items-per-page="10">
 
         <template #item.sound="{ item }">
-          <sound :url="item.sound"/>
+          <sound
+            v-if="item.sound"
+            :url="item.sound"
+          />
         </template>
       </v-data-table>
     </v-container>

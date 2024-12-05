@@ -35,7 +35,7 @@ export const useBirdStore = defineStore('bird', () => {
     }
   }
 
-  function remapRecordings(data:Recording[]) {
+  function remapRecordings(data:Recording[]):PickedRecording[] {
     return data.map(recording => {
       return {
         id: recording.id,
