@@ -1,6 +1,12 @@
 <script setup lang="ts">
 
-  // to do : pinia store
+  // in progress : pinia store
+
+  import { storeToRefs } from 'pinia'
+  import { useBirdStore } from '../stores/bird.ts'
+
+  const { birds } = storeToRefs(useBirdStore())
+
   // to do : fetch data
   // to do : display data in vuetify data-table
   // to do : add pagination
@@ -10,7 +16,7 @@
 </script>
 
 <template>
-
+  {{ birds }}
 </template>
 
 <style scoped>
