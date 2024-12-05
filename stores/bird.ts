@@ -1,12 +1,22 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { Response, Recording, PickedRecording } from '../src/types.ts'
 
 export const useBirdStore = defineStore('bird', () => {
 
+  const shortSounds = ref(false)
+
   const isFetching = ref(false)
   const error = ref<string | null | unknown>(null)
   const list = ref<PickedRecording[]>([])
+
+  const filteredList = computed(() => {
+    if (!shortSounds.value) return list.value
+    else return list.value.filter(recording => {
+      const [min, sec] = recording.duration.split(':')
+      if (min === '0' && Number(sec) < 30) return recording
+    })
+  })
 
   async function fetchData() {
 
@@ -44,9 +54,10 @@ export const useBirdStore = defineStore('bird', () => {
   }
 
   return {
+    toggleBirdShortSounds: shortSounds,
     birdIsFetching: isFetching,
     birdError: error,
-    birdList: list,
+    birdList: filteredList,
     fetchBirds: fetchData
   }
 })

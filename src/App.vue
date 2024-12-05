@@ -4,12 +4,10 @@
   import { useBirdStore } from '../stores/bird.ts'
 
   const { fetchBirds } = useBirdStore()
-  const { birdIsFetching, birdList } = storeToRefs(useBirdStore())
+  const { toggleBirdShortSounds, birdIsFetching, birdList } = storeToRefs(useBirdStore())
 
   fetchBirds()
 
-  // in progress : add tests
-  // backlog : Add a filter on the sound file length if is smaller that 30 seconds or bigger with a switch
   // backlog : Integrate a small player in the datatable
   // backlog : UI
 </script>
@@ -17,6 +15,10 @@
 <template>
   <v-app>
     <v-container>
+      <v-switch
+        v-model="toggleBirdShortSounds"
+        label="Only short recordings (less than 30 sec.)"
+      />
       <v-data-table
         :loading="birdIsFetching"
         :items="birdList"
