@@ -5,7 +5,7 @@
 
   const { birdList } = storeToRefs(useBirdStore())
 
-  // to do : display data in vuetify data-table
+  // in progress : display data in vuetify data-table
   // to do : add pagination
   // to do : add tests (cypress ?)
   // backlog : Add a filter on the sound file length if is smaller that 30 seconds or bigger with a switch

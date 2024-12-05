@@ -1,10 +1,22 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import './style.css'
+
+// @ts-ignore (vuetify/styles unrelenting error)
+import 'vuetify/styles'
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
+
 import App from './App.vue'
 
-const pinia = createPinia()
-const app = createApp(App)
+const vuetify = createVuetify({
+  components,
+  directives,
+})
 
-app.use(pinia)
-app.mount('#app')
+const pinia = createPinia()
+
+createApp(App)
+  .use(vuetify)
+  .use(pinia)
+  .mount('#app')
