@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import { Response, Recording, PickedRecording } from '../src/types.ts'
+import { PickedRecording, Recording, Response } from '../src/types.ts'
 
 export const useBirdStore = defineStore('bird', () => {
 
@@ -39,6 +39,7 @@ export const useBirdStore = defineStore('bird', () => {
     return data.map(recording => {
       return {
         id: recording.id,
+        sound: generateSoundUrl(recording),
         genericName: recording.gen,
         specificName: recording.sp,
         englishName: recording.en,
@@ -51,6 +52,22 @@ export const useBirdStore = defineStore('bird', () => {
         date: recording.date
       }
     })
+  }
+
+  function generateSoundUrl(recording:Recording) {
+
+    const identifier = getIdentifier()
+
+    if (!identifier || !recording['file-name']) return null
+
+    const baseUrl = 'https://xeno-canto.org/sounds/uploaded/'
+    return `${baseUrl}${identifier}/${recording['file-name']}`
+
+    function getIdentifier() {
+      const smallUrl = recording.sono.small
+      const match = smallUrl.match(/uploaded\/(.*?)\//)
+      return match ? match [1] : null
+    }
   }
 
   return {

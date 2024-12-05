@@ -37,7 +37,11 @@ describe('Bird Store', () => {
               type: 'song',
               length: '50',
               time: '10:00',
-              date: '2023-01-01'
+              date: '2023-01-01',
+              ['file-name']: 'sound.mp3',
+              sono: {
+                small: 'ABCD'
+              }
             }
           ]
         })

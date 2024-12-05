@@ -57,13 +57,16 @@ export type Recording = {
 }
 
 type RenameKeys<T, M extends Record<keyof T, string>> = {
-  [K in keyof T as M[K]]: T[K]
+  [K in keyof T as K extends keyof M ? M[K] : never]: T[K]
+} & {
+  [K in keyof M as K extends keyof T ? never : M[K]]?: string; // Ajoute les clés supplémentaires
 }
 
 export type PickedRecording = RenameKeys<
   Pick<Recording, 'id' | 'gen' | 'sp' | 'en' | 'rec' | 'cnt' | 'loc' | 'type' | 'length' | 'time' | 'date'>,
   {
     id: 'id'
+    sound: 'sound';
     gen: 'genericName'
     sp: 'specificName'
     en: 'englishName'
