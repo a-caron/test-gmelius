@@ -8,8 +8,6 @@
   const { toggleBirdShortSounds, birdIsFetching, birdList } = storeToRefs(useBirdStore())
 
   fetchBirds()
-
-  // in progress : mail + questions (+ github access)
 </script>
 
 <template>
